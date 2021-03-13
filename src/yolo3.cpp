@@ -4,6 +4,14 @@ Yolo3::Yolo3(){}
 
 Yolo3::~Yolo3(){}
 
+void Yolo3::run(cv::String model_path, cv::String config_path)
+{
+    Model model = Model::initialize(cv::String(model_path), cv::String(config_path));
+    _model = std::make_unique<Model>(std::move(model));
+}
+
+
+
 int Yolo3::testCamera()
 {
     cv::VideoCapture capture(0);
