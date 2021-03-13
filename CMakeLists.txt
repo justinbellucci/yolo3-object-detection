@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.11.3)
 
 project(yolo3_object_detection)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pthread")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 find_package(OpenCV 4.5 REQUIRED)
 
