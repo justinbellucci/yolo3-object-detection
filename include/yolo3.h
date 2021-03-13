@@ -1,6 +1,11 @@
 #ifndef YOLO3_H
 #define YOLO3_H
 
+#include <iostream>
+
+#include <opencv2/dnn.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
 class Yolo3
 {
 public:
@@ -9,6 +14,7 @@ public:
     ~Yolo3();
 
     // public methods
+    int testCamera();
 
 private:
     
