@@ -10,7 +10,7 @@ class Model
 {
 public:
     // constructor moved to private
-    Model() = delete;
+    Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
     // destructor
     ~Model();
     // copy constructor
@@ -28,7 +28,7 @@ public:
 
 private:
     // constructor
-    Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
+    // Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
     
     std::unique_ptr<cv::dnn::Net> _net;
     // _preprocessor;
