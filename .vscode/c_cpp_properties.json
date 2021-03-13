@@ -1,0 +1,28 @@
+// cpp properties file for intellisence and IncludePath
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/Cellar/opencv/4.5.1_3/include/opencv4",
+                "/Applications/CMake.app/Contents/bin",
+                "/usr/local/Cellar/opencv/4.5.1_3/lib"
+            ],
+            "defines": [],
+            "macFrameworkPath": [],
+            "compilerPath": "/usr/local/bin/gcc-10",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "macos-gcc-x64",
+            "browse": {
+                "path": [
+                    "/usr/local/Cellar/opencv/4.5.1_3/include/opencv4"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
