@@ -10,5 +10,4 @@ int main()
     // do some testing here
     Yolo3 yolo3;
     yolo3.run(model_path, config_path);
-    //yolo3.testCamera();
 }
