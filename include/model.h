@@ -9,8 +9,9 @@
 class Model 
 {
 public:
-    // constructor moved to private
-    Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
+    // constructor 
+    Model() = delete;
+    //Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
     // destructor
     ~Model();
     // copy constructor
@@ -18,17 +19,17 @@ public:
     // copy assignment operator
     Model &operator=(const Model &source) = delete;
     // move constructor
-    Model(Model &&source);
+    Model(Model &&source) noexcept;
     // move assignment operator
-    Model &operator=(Model &&source);
+    Model &operator=(Model &&source) noexcept;
 
     static Model initialize(const cv::String &model, const cv::String &config, float confThreshold = 0.5, float nmsThreshold = 0.4,
                             const cv::String &framework = "", cv::dnn::Backend backend = cv::dnn::DNN_BACKEND_DEFAULT,
                             cv::dnn::Target target = cv::dnn::DNN_TARGET_CPU);
 
 private:
-    // constructor
-    // Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
+    // constructor - class object protected from creation outside scope
+    Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold);
     
     std::unique_ptr<cv::dnn::Net> _net;
     // _preprocessor;

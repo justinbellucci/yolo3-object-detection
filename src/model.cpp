@@ -9,10 +9,14 @@ Model::Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold)
 
     _confThreshold = confThreshold;
     _nmsThreshold = nmsThreshold;
+    std::cout << "CREATING instance of Model at " << this << std::endl;
 }
 
 // destructor
-Model::~Model() = default;
+Model::~Model()
+{
+    std::cout << "DELETING instance of Model at " << this << std::endl;
+}
 
 // copy constructor
 //Model::Model(const Model &source) {}
@@ -21,7 +25,7 @@ Model::~Model() = default;
 //Model &Model::operator=(const Model &source) {}
 
 // move constructor
-Model::Model(Model &&source)
+Model::Model(Model &&source) noexcept
 {
     std::cout << "MOVING (c'tor) instance " << &source << " to instance " << this << std::endl;
     _net = std::move(source._net);
@@ -34,7 +38,7 @@ Model::Model(Model &&source)
 }
 
 // move assignment operator
-Model &Model::operator=(Model &&source) 
+Model &Model::operator=(Model &&source) noexcept
 {
     std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
     _net = std::move(source._net);
