@@ -4,10 +4,11 @@
 
 cv::String model_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/yolov3.weights";
 cv::String config_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/yolov3.cfg";
+cv::String classNames_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/coco.names";
 
 int main()
 {
     // do some testing here
     Yolo3 yolo3;
-    yolo3.run(model_path, config_path);
+    yolo3.run(model_path, config_path, classNames_path);
 }
