@@ -1,4 +1,5 @@
 #include "yolo3.h"
+#include "yoloconfig.h"
 
 #include <iostream>
 
@@ -8,7 +9,13 @@ cv::String classNames_path = "/Users/justinbellucci/GitHub/yolo3-object-detectio
 
 int main()
 {
-    // do some testing here
-    Yolo3 yolo3;
+    
+    // instantiate struct object to hold frame processing data
+    YoloConfig::FrameProcessingData data;
+    data.inpWidth = 416;
+    data.inpHeight = 416;
+
+    // run main process
+    Yolo3 yolo3(data);
     yolo3.run(model_path, config_path, classNames_path);
 }
