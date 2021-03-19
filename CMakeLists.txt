@@ -20,3 +20,6 @@ file(GLOB project_SRCS src/*.cpp)
 # Add project executables
 add_executable(yolo3_detector ${project_SRCS})
 target_link_libraries(yolo3_detector ${OpenCV_LIBRARIES})
+
+target_link_directories(yolo3_detector PRIVATE ${OpenCV_LIBRARY_DIRS})
+target_compile_definitions(yolo3_detector PRIVATE ${OpenCV_DEFINITIONS})
