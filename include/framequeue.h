@@ -6,30 +6,22 @@
 
 #include <opencv2/core.hpp>
 
-template <class T>
-class FrameQueue 
+template <typename T>
+class FrameQueue : private std::queue<T>
 {
 public:
     // constructor / destructor
     FrameQueue();
     ~FrameQueue();
-    // // copy constructor
-    // FrameQueue(const FrameQueue &source) = delete;
-    // // copy assignment operator
-    // FrameQueue &operator=(const FrameQueue &source) = delete;
-    // // move constructor
-    // FrameQueue(FrameQueue &&source) = delete;
-    // // move assignment operator
-    // FrameQueue &operator=(FrameQueue &&source) = delete;
-
     // methods 
-    void pushFrame(const T &item);
-    T getFrame();
+    void push(const T &item);
+    T get();
     bool isEmpty();
+    //void clear();
 
 private:
     std::mutex _mutex;
-    std::queue<T> _queue;
+    //std::queue<T> _queue;
 };
 
 // ---- Template class function definitions
@@ -43,23 +35,29 @@ template <typename T>
 FrameQueue<T>::~FrameQueue(){}
 
 template <typename T>
-void FrameQueue<T>::pushFrame(const T &item)
+void FrameQueue<T>::push(const T &item)
 {
     // perform queue modification under the lock
     std::lock_guard<std::mutex> lckg(_mutex);
-    _queue.push(item);
+    std::queue<T>::push(item);
 }
 
 template <typename T>
-T FrameQueue<T>::getFrame()
+T FrameQueue<T>::get()
 {
     // perform queue modification under the lock
     std::lock_guard<std::mutex> lckg(_mutex);
     // first in first out
-    T item = std::move(_queue.front());
-    _queue.pop();
+    T item = std::move(this->front());
+    this->pop();
 
     return item;
+}
+
+template <typename T>
+bool FrameQueue<T>::isEmpty()
+{
+    return this->empty();
 }
 
 #endif
