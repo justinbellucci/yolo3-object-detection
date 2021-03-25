@@ -5,9 +5,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/Cellar/opencv/4.5.1_3/include/opencv4",
+                "/usr/local/OpenCV_install/include/opencv4",
                 "/Applications/CMake.app/Contents/bin",
-                "/usr/local/Cellar/opencv/4.5.1_3/lib",
+                "/usr/local/OpenCV_install/lib",
                 "${workspaceFolder}/include"
             ],
             "defines": [],
@@ -18,7 +18,7 @@
             "intelliSenseMode": "macos-gcc-x64",
             "browse": {
                 "path": [
-                    "/usr/local/Cellar/opencv/4.5.1_3/include/opencv4"
+                    "/usr/local/OpenCV_install/include/opencv4"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
