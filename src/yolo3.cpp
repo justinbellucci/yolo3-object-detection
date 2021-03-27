@@ -4,6 +4,7 @@
 
 // constructor
 Yolo3::Yolo3(YoloConfig::FrameProcessingData &data){
+    _model = nullptr;
     _capture = std::make_unique<cv::VideoCapture>();
     _frames = std::make_unique<FrameQueue<cv::Mat>>();
     _processedFrames = std::make_unique<FrameQueue<cv::Mat>>();
@@ -39,22 +40,17 @@ void Yolo3::run(cv::String &model_path, cv::String &config_path, cv::String &cla
 
     // capture and process frames
     startCaptureFramesThread();
-    startProcessFramesThread();
+    processFrames();
 }
 
 // start a new thread for frame capturing
 void Yolo3::startCaptureFramesThread()
 {
-    threads.emplace_back(std::thread(&Yolo3::CaptureFrames, this));
+    threads.emplace_back(std::thread(&Yolo3::captureFrames, this));
 }
 
-// start a new thread for frame processing
-void Yolo3::startProcessFramesThread()
-{
-    threads.emplace_back(std::thread(&Yolo3::ProcessFrames, this));
-}
 
-void Yolo3::CaptureFrames()
+void Yolo3::captureFrames()
 {
     cv::Mat frame;
     while(true)
@@ -64,17 +60,16 @@ void Yolo3::CaptureFrames()
         if(!frame.empty())
         {
             _frames->push(frame.clone());
-        } else 
+        } 
+        else 
         {
             break;
         }
     }
 }
 
-void Yolo3::ProcessFrames()
+void Yolo3::processFrames()
 {
-    // create a queue to store AsyncArray object 
-    std::queue<cv::AsyncArray> futures;
     // process frames
     while(true)
     {
@@ -83,29 +78,18 @@ void Yolo3::ProcessFrames()
         if(!_frames->isEmpty())
         {
             frame = _frames->get();
-            
         }
 
-        
         // // process the frame
         if(!frame.empty())
         {
             _model->processFrames(frame, _frameProcData);
             // add processed frames to queue
             _processedFrames->push(frame);
-            // run a foward pass through the model
-            futures.push(_model->forward());
+            _model->forward(); // forward pass through the network
         }
         // // get the predictions of the model from the futures 
-        // while(!futures.empty() && futures.front().wait_for(std::chrono::seconds(0)))
-        // {
-        //     // get the first future
-        //     cv::AsyncArray asyncOut = futures.front();
-        //     futures.pop();
-        //     cv::Mat out;
-        //     asyncOut.get(out);
-        //     _predictions->push({out}); // add predicitions
-        // }
+        
     }
 }
 

@@ -44,10 +44,10 @@ private:
 
     // private methods
     void startCaptureFramesThread();
-    void startProcessFramesThread();
+    // void startProcessFramesThread();
 
-    void CaptureFrames();
-    void ProcessFrames();
+    void captureFrames();
+    void processFrames();
 
     void loadClassNames(std::string &path);
 };
