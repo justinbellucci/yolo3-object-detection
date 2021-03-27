@@ -8,6 +8,7 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/dnn.hpp>
+#include <opencv2/core/async.hpp>
 
 class Model 
 {
@@ -21,17 +22,19 @@ public:
     // copy assignment operator
     Model &operator=(const Model &source) = delete;
     // // move constructor
-    Model(Model &&source);
+    Model(Model &&source) noexcept; 
     // // move assignment operator
-    Model &operator=(Model &&source);
+    Model &operator=(Model &&source) noexcept;
 
     static Model initialize(const cv::String &model, const cv::String &config, float confThreshold = 0.5, float nmsThreshold = 0.4,
-                            const cv::String &framework = "", cv::dnn::Backend backend = cv::dnn::DNN_BACKEND_DEFAULT,
+                            const cv::String &framework = "", cv::dnn::Backend backend = cv::dnn::DNN_BACKEND_OPENCV,
                             cv::dnn::Target target = cv::dnn::DNN_TARGET_CPU);
 
     void processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data);
-    cv::AsyncArray forward();
+    void forward();
 
+    std::vector<cv::String> getOutputNames(cv::dnn::Net &net);
+    
 private:
     // constructor - class object protected from creation outside scope
     Model(cv::dnn::Net &net, float confThreshold, float nmsThreshold, Preprocessor &preproc);
