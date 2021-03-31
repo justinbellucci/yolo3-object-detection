@@ -12,8 +12,27 @@ const char* keys =
 "{video v       |<none>| input video   }"
 ;
 
+std::string outputFile;
+cv::String mediaPath;
+bool isVideo = false;
+
 int main(int argc, char** argv)
 {
-    
+    cv::CommandLineParser parser(argc, argv, keys);
+    parser.about("Use this script to run object detection using YOLO3 in OpenCV.");
+    if (parser.has("help"))
+    {
+        parser.printMessage();
+        return 0;
+    }
+
+    if(parser.has("video"))
+    {
+        isVideo = true;
+        mediaPath = parser.get<cv::String>("video");
+    }
+    else
+        isVideo = false;
+
 }
 
