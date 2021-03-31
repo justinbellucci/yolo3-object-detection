@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <queue>
 
 #include <opencv2/dnn.hpp>
@@ -23,17 +24,19 @@ public:
     Yolo3(struct YoloConfig::FrameProcessingData &data);
     ~Yolo3();
     // public methods
-    void run(cv::String &weightsPath, cv::String &configPath, cv::String &classNamesPath, cv::String &mediaPath);
+    void run(cv::String &weightsPath, cv::String &configPath, cv::String &classNamesPath, cv::String &mediaPath, bool &isVideo);
 
 private:
-    std::unique_ptr<cv::VideoCapture> _capture; // video capture object
+    std::unique_ptr<cv::VideoCapture> _capturer; // video capture object
     std::unique_ptr<cv::VideoWriter> _video; // 
+    std::unique_ptr<cv::dnn::Net> _net;
+
     YoloConfig::FrameProcessingData _frameProcData;
     std::vector<std::string> _classNames;
     std::string _outputFile;
 
-    std::unique_ptr<cv::Mat> _frame;
-    std::unique_ptr<cv::Mat> _blob;
+    cv::Mat _frame;
+    cv::Mat _blob;
     // private methods
     
     void loadClassNames(const cv::String &classNamesPath);
