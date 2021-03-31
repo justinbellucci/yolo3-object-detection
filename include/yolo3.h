@@ -1,15 +1,11 @@
 #ifndef YOLO3_H
 #define YOLO3_H
 
-#include "model.h"
-#include "framequeue.h"
 #include "yoloconfig.h"
-#include "preprocessor.h"
 
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <thread>
 #include <algorithm>
 #include <string>
 #include <fstream>
@@ -26,30 +22,24 @@ public:
     Yolo3() = delete;
     Yolo3(struct YoloConfig::FrameProcessingData &data);
     ~Yolo3();
-
     // public methods
-    void run(cv::String &model_path, cv::String &config_path, cv::String &classNames_path);
+    void run(cv::String &weightsPath, cv::String &configPath, cv::String &classNamesPath, cv::String &mediaPath);
 
 private:
-    std::unique_ptr<Model> _model; // yolo3 dnn model
     std::unique_ptr<cv::VideoCapture> _capture; // video capture object
-    std::unique_ptr<FrameQueue<cv::Mat>> _frames; // FrameQueue object
-    std::unique_ptr<FrameQueue<cv::Mat>> _processedFrames; 
-    std::unique_ptr<FrameQueue<std::vector<cv::Mat>>> _predictions;
-    
-    std::vector<std::thread> threads; // create a thread vector
-    std::vector<std::string> _classNames; 
-
+    std::unique_ptr<cv::VideoWriter> _video; // 
     YoloConfig::FrameProcessingData _frameProcData;
+    std::vector<std::string> _classNames;
+    std::string _outputFile;
 
+    std::unique_ptr<cv::Mat> _frame;
+    std::unique_ptr<cv::Mat> _blob;
     // private methods
-    void startCaptureFramesThread();
-    // void startProcessFramesThread();
-
-    void captureFrames();
-    void processFrames();
-
-    void loadClassNames(std::string &path);
+    
+    std::vector<std::string> loadClassNames(const cv::String &classNamesPath);
+    std::vector<cv::String> getOutputsNames(const cv::dnn::Net& net);
+    void postprocess(cv::Mat& frame, const std::vector<cv::Mat>& outs);
+    void drawPredictions(int classId, float conf, int left, int top, int right, int bottom, cv::Mat &frame);
 };
 
 #endif
