@@ -36,7 +36,7 @@ private:
     std::unique_ptr<cv::Mat> _blob;
     // private methods
     
-    std::vector<std::string> loadClassNames(const cv::String &classNamesPath);
+    void loadClassNames(const cv::String &classNamesPath);
     std::vector<cv::String> getOutputsNames(const cv::dnn::Net& net);
     void postprocess(cv::Mat& frame, const std::vector<cv::Mat>& outs);
     void drawPredictions(int classId, float conf, int left, int top, int right, int bottom, cv::Mat &frame);
