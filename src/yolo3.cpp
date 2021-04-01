@@ -14,7 +14,7 @@ Yolo3::Yolo3(YoloConfig::FrameProcessingData &data){
 Yolo3::~Yolo3() = default;
 
 // --- class methods ---
-void Yolo3::run(cv::String &weightsPath, cv::String &configPath, cv::String &classNamesPath, cv::String &mediaPath, bool &isVideo)
+void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &classNamesPath, cv::String &mediaPath, bool &isVideo)
 {
     // TODO: Move this somewhere else
     std::string outputFile = "yolo_out_cpp.avi";
@@ -23,8 +23,8 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, cv::String &cla
     loadClassNames(classNamesPath);
     // load the network
     cv::dnn::Net net = cv::dnn::readNetFromDarknet(configPath, weightsPath); 
-    _net = std::make_unique<cv::dnn::Net>(std::move(net));
-    _net->setPreferableBackend(cv::dnn::DNN_TARGET_CPU);
+    // _net = std::make_unique<cv::dnn::Net>(std::move(net));
+    net.setPreferableBackend(cv::dnn::DNN_TARGET_CPU);
 
     // open video file or webcam
     try
@@ -70,21 +70,21 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, cv::String &cla
         cv::dnn::blobFromImage(_frame, _blob, 1/255.0, cv::Size(_frameProcData.inpWidth, _frameProcData.inpHeight), cv::Scalar(0,0,0), true, false);
         
         //Sets the input to the network
-        _net->setInput(_blob);
+        net.setInput(_blob);
 
         // Runs the forward pass to get output of the output layers
-        std::vector<cv::Mat> outs;
-        _net->forward(outs, getOutputsNames(*_net));
+        // std::vector<cv::Mat> outs;
+        // net.forward(outs, getOutputsNames(net));
         
         // Remove the bounding boxes with low confidence
-        postprocess(_frame, outs);
+        // postprocess(_frame, outs);
         
         // Put efficiency information. The function getPerfProfile returns the overall time for inference(t) and the timings for each of the layers(in layersTimes)
         std::vector<double> layersTimes;
         double freq = cv::getTickFrequency() / 1000;
-        double t = net.getPerfProfile(layersTimes) / freq;
-        std::string label = cv::format("Inference time for a frame : %.2f ms", t);
-        cv::putText(_frame, label, cv::Point(0, 15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255));
+        // double t = net.getPerfProfile(layersTimes) / freq;
+        // std::string label = cv::format("Inference time for a frame : %.2f ms", t);
+        // cv::putText(_frame, label, cv::Point(0, 15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255));
         
         // Write the frame with the detection boxes
         cv::Mat detectedFrame;
@@ -111,7 +111,7 @@ void Yolo3::loadClassNames(const std::string &namesPath)
 }
 
 // get the names of the output layers
-std::vector<cv::String> getOutputNames(const cv::dnn::Net &net)
+std::vector<cv::String> getOutputNames(cv::dnn::Net &net)
 {
     static std::vector<cv::String> names;
     if(names.empty())
