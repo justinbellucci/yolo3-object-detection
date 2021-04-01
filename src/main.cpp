@@ -34,5 +34,15 @@ int main(int argc, char** argv)
     else
         isVideo = false;
 
+    YoloConfig::FrameProcessingData frameProcData;
+    frameProcData.confThreshold = 0.5;
+    frameProcData.nmsThreshold = 0.4;
+    frameProcData.inpHeight = 416;
+    frameProcData.inpWidth = 416;
+
+    Yolo3 yolo3(frameProcData);
+    yolo3.run(weights_path, config_path, classNames_path, mediaPath, isVideo);
+
+    return 0;
 }
 
