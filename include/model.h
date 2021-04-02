@@ -27,13 +27,9 @@ public:
     Model &operator=(Model &&source) noexcept;
 
     static Model initialize(const cv::String &model, const cv::String &config, float confThreshold = 0.5, float nmsThreshold = 0.4,
-                            cv::dnn::Backend backend = cv::dnn::DNN_BACKEND_DEFAULT, cv::dnn::Target target = cv::dnn::DNN_TARGET_CPU);
+                            cv::dnn::Target backend = cv::dnn::DNN_TARGET_CPU);
 
     void processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data);
-    std::vector<cv::Mat> forward();
-
-    void postProcessFrames(cv::Mat &frame, const std::vector<cv::Mat> &outs, std::vector<std::string> &names);
-    void drawPreds(int classId, float conf, int left, int top, int right, int bottom, cv::Mat &frame, std::vector<std::string> &names);
 
     std::vector<cv::String> getOutputNames();
     
