@@ -73,18 +73,18 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &cl
         net.setInput(_blob);
 
         // Runs the forward pass to get output of the output layers
-        // std::vector<cv::Mat> outs;
-        // net.forward(outs, getOutputsNames(net));
+        std::vector<cv::Mat> outs;
+        net.forward(outs, getOutputsNames(net));
         
         // Remove the bounding boxes with low confidence
-        // postprocess(_frame, outs);
+        postprocess(_frame, outs);
         
         // Put efficiency information. The function getPerfProfile returns the overall time for inference(t) and the timings for each of the layers(in layersTimes)
         std::vector<double> layersTimes;
         double freq = cv::getTickFrequency() / 1000;
-        // double t = net.getPerfProfile(layersTimes) / freq;
-        // std::string label = cv::format("Inference time for a frame : %.2f ms", t);
-        // cv::putText(_frame, label, cv::Point(0, 15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255));
+        double t = net.getPerfProfile(layersTimes) / freq;
+        std::string label = cv::format("Inference time for a frame : %.2f ms", t);
+        cv::putText(_frame, label, cv::Point(0, 15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255));
         
         // Write the frame with the detection boxes
         cv::Mat detectedFrame;
@@ -111,7 +111,7 @@ void Yolo3::loadClassNames(const std::string &namesPath)
 }
 
 // get the names of the output layers
-std::vector<cv::String> getOutputNames(cv::dnn::Net &net)
+std::vector<cv::String> Yolo3::getOutputsNames(cv::dnn::Net &net)
 {
     static std::vector<cv::String> names;
     if(names.empty())
@@ -132,7 +132,7 @@ std::vector<cv::String> getOutputNames(cv::dnn::Net &net)
 }
 
 // post process the frames by removing the bounding boxes with low confidence
-void postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs)
+void Yolo3::postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs)
 {
     std::vector<int> classIDs;
     std::vector<float> confidences;
@@ -174,8 +174,8 @@ void postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs)
     {
         int idx = indices[i];
         cv::Rect box = boxes[idx];
-        // drawPredictions(classIDs[idx], confidences[idx], box.x, box.y,
-        //          box.x + box.width, box.y + box.height, frame);
+        drawPredictions(classIDs[idx], confidences[idx], box.x, box.y,
+                 box.x + box.width, box.y + box.height, frame);
     }
 }
 
