@@ -2,6 +2,7 @@
 #define YOLO3_H
 
 #include "yoloconfig.h"
+#include "model.h"
 
 #include <iostream>
 #include <memory>
@@ -29,7 +30,7 @@ public:
 private:
     std::unique_ptr<cv::VideoCapture> _capturer; // video capture object
     std::unique_ptr<cv::VideoWriter> _video; // 
-    // std::unique_ptr<cv::dnn::Net> _net;
+    std::unique_ptr<Model> _model;
 
     YoloConfig::FrameProcessingData _frameProcData;
     std::vector<std::string> _classNames;
@@ -38,7 +39,6 @@ private:
     cv::Mat _frame;
     cv::Mat _blob;
     // private methods
-    
     void loadClassNames(const cv::String &classNamesPath);
     std::vector<cv::String> getOutputsNames(cv::dnn::Net &net);
     void postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs);

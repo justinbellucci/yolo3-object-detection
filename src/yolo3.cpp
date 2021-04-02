@@ -22,6 +22,9 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &cl
     // load the class names from the coco.names file
     loadClassNames(classNamesPath);
     // load the network
+    Model model = Model::initialize(weightsPath, configPath);
+    _model = std::make_unique<Model>(std::move(model));
+    
     cv::dnn::Net net = cv::dnn::readNetFromDarknet(configPath, weightsPath); 
     // _net = std::make_unique<cv::dnn::Net>(std::move(net));
     net.setPreferableBackend(cv::dnn::DNN_TARGET_CPU);
