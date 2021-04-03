@@ -26,12 +26,11 @@ public:
     // // move assignment operator
     Model &operator=(Model &&source) noexcept;
 
-    static Model initialize(const cv::String &model, const cv::String &config, float confThreshold = 0.5, float nmsThreshold = 0.4,
+    static Model initialize(const cv::String &configPath, const cv::String &weightsPath, float confThreshold = 0.5, float nmsThreshold = 0.4,
                             cv::dnn::Target backend = cv::dnn::DNN_TARGET_CPU);
 
-    void processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data);
+    cv::dnn::Net processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data);
 
-    std::vector<cv::String> getOutputNames();
     
 private:
     // constructor - class object protected from creation outside scope

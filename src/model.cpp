@@ -42,21 +42,22 @@ Model &Model::operator=(Model &&source) noexcept
     return *this;
 }
 
-Model Model::initialize(const cv::String &model, const cv::String &config, float confThreshold, float nmsThreshold,
+Model Model::initialize(const cv::String &configPath, const cv::String &weightsPath, float confThreshold, float nmsThreshold,
                         cv::dnn::Target backend)
 {
-    cv::dnn::Net net = cv::dnn::readNetFromDarknet(config, model);
-    net.setPreferableBackend(cv::dnn::DNN_TARGET_CPU);
-    // instantiate preProcessor 
+    cv::dnn::Net net = cv::dnn::readNetFromDarknet(configPath, weightsPath); 
+    net.setPreferableBackend(backend);
 
     return Model(net, confThreshold, nmsThreshold);
 }
 
-void Model::processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data)
+cv::dnn::Net Model::processFrames(cv::Mat &frame, struct YoloConfig::FrameProcessingData &data)
 {
-    // _preProcessor->process(frame, *_net, data);
-    static cv::Mat blob;
-    cv::dnn::blobFromImage(frame, blob, 1.0, cv::Size(data.inpWidth, data.inpHeight), cv::Scalar());
-    // set the input to the network
+    cv::Mat blob;
+    // Create a 4D blob from a frame.
+    cv::dnn::blobFromImage(frame, blob, 1/255.0, cv::Size(data.inpWidth, data.inpHeight), cv::Scalar(0,0,0), true, false);
+        
+    //Sets the input to the network
     _net->setInput(blob);
+    return *_net;
 }
