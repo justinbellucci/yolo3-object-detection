@@ -10,7 +10,6 @@ Yolo3::Yolo3(YoloConfig::FrameProcessingData &data){
 }
 
 // destructor
-// set up thread barrier before object is destroyed
 Yolo3::~Yolo3() = default;
 
 // --- class methods ---
@@ -22,12 +21,8 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &cl
     // load the class names from the coco.names file
     loadClassNames(classNamesPath);
     // load the network
-    Model model = Model::initialize(weightsPath, configPath);
+    Model model = Model::initialize(configPath, weightsPath);
     _model = std::make_unique<Model>(std::move(model));
-    
-    cv::dnn::Net net = cv::dnn::readNetFromDarknet(configPath, weightsPath); 
-    // _net = std::make_unique<cv::dnn::Net>(std::move(net));
-    net.setPreferableBackend(cv::dnn::DNN_TARGET_CPU);
 
     // open video file or webcam
     try
@@ -69,25 +64,15 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &cl
             break;
         }
 
-        // Create a 4D blob from a frame.
-        cv::dnn::blobFromImage(_frame, _blob, 1/255.0, cv::Size(_frameProcData.inpWidth, _frameProcData.inpHeight), cv::Scalar(0,0,0), true, false);
-        
-        //Sets the input to the network
-        net.setInput(_blob);
+        cv::dnn::Net net = _model->processFrames(_frame, _frameProcData);
+        _net = std::make_unique<cv::dnn::Net>(std::move(net));
 
         // Runs the forward pass to get output of the output layers
         std::vector<cv::Mat> outs;
-        net.forward(outs, getOutputsNames(net));
-        
+        // net.forward(outs, getOutputsNames(net));
+        _net->forward(outs, getOutputsNames(*_net));
         // Remove the bounding boxes with low confidence
         postprocess(_frame, outs);
-        
-        // Put efficiency information. The function getPerfProfile returns the overall time for inference(t) and the timings for each of the layers(in layersTimes)
-        std::vector<double> layersTimes;
-        double freq = cv::getTickFrequency() / 1000;
-        double t = net.getPerfProfile(layersTimes) / freq;
-        std::string label = cv::format("Inference time for a frame : %.2f ms", t);
-        cv::putText(_frame, label, cv::Point(0, 15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255));
         
         // Write the frame with the detection boxes
         cv::Mat detectedFrame;

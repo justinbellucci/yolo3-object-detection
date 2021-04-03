@@ -17,7 +17,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
-class Yolo3
+class Yolo3 
 {
 public:
     // constructor/destructor
@@ -31,7 +31,8 @@ private:
     std::unique_ptr<cv::VideoCapture> _capturer; // video capture object
     std::unique_ptr<cv::VideoWriter> _video; // 
     std::unique_ptr<Model> _model;
-
+    std::unique_ptr<cv::dnn::Net> _net;
+    
     YoloConfig::FrameProcessingData _frameProcData;
     std::vector<std::string> _classNames;
     std::string _outputFile;
