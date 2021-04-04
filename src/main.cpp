@@ -8,7 +8,7 @@ cv::String config_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/yo
 cv::String classNames_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/coco.names";
 
 const char* keys =
-"{help h usage ? | | Usage examples: \n\t\t./yolo3_detector --video=run_sm.mp4}"
+"{help h usage ? | | Usage examples: \n\t\t./yolo3_detector --video=my_video.mp4}"
 "{video v       |<none>| input video   }"
 ;
 

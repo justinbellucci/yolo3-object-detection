@@ -15,7 +15,6 @@ Yolo3::~Yolo3() = default;
 // --- class methods ---
 void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &classNamesPath, cv::String &mediaPath, bool &isVideo)
 {
-    // TODO: Move this somewhere else
     std::string outputFile = "yolo_out_cpp.avi";
 
     // load the class names from the coco.names file
@@ -69,7 +68,6 @@ void Yolo3::run(cv::String &weightsPath, cv::String &configPath, std::string &cl
 
         // Runs the forward pass to get output of the output layers
         std::vector<cv::Mat> outs;
-        // net.forward(outs, getOutputsNames(net));
         _net->forward(outs, getOutputsNames(*_net));
         // Remove the bounding boxes with low confidence
         postprocess(_frame, outs);

@@ -36,7 +36,6 @@ Model &Model::operator=(Model &&source) noexcept
 {
     std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
     _net = std::move(source._net);
-
     source._net = nullptr;
 
     return *this;
