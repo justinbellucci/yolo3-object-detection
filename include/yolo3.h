@@ -5,9 +5,7 @@
 #include "model.h"
 
 #include <iostream>
-#include <memory>
 #include <vector>
-#include <algorithm>
 #include <string>
 #include <fstream>
 #include <sstream>

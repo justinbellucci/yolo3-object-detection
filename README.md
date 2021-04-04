@@ -1,6 +1,6 @@
 # yolo3-object-detection
 
-<img src="data/YoloCapture.gif"/>
+<img src="data/yoloDriving.gif"/>
 
 This is the final Capstone Project for the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). 
 
