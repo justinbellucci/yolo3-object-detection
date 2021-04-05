@@ -4,7 +4,7 @@ This project is the Capstone Project for the [Udacity C++ Nanodegree Program](ht
 
 This project also aims to demonstrate the use of modern Object Oriented Programming in C++ with the features such as smart pointers, and the rule-of-five. 
 
-<img src="data/classStructure.png"/>
+<img src="data/yoloDriving.gif"/>
 
 ## Dependencies for Running Locally
 The following dependencies are required to run the program locally.
@@ -56,7 +56,7 @@ The input to this program can be either a mp4 video file or a webcam. Once run, 
     ```
 
 ## Class Structure
-<img src="data/yoloDriving.gif"/>
+<img src="data/classStructure.png"/>
 
 ## Rubric Points 
 ### Loops, Functions, I/O
