@@ -28,7 +28,7 @@ The following dependencies are required to run the program locally.
 		git clone https://github.com/justinbellucci/yolo3-object-detection.git
 		cd yolo3-object-detection
 	```
-2. Download the models
+2. Download the models and note the path to each file.
     ```	
 		sudo chmod a+x getModels.sh
         ./getModels.sh
@@ -44,15 +44,15 @@ The following dependencies are required to run the program locally.
     ```
 ## Running the Program
 The input to this program can be either a mp4 video file or a webcam. Once run, a window will open and the video will play automatically. Once finished, the program will terminate the window. 
-1. To run with a video file:
+1. Video file:
 
     ```
-    ./yolo3_detector --video=/my_video.mp4
+    ./yolo3_detector --video=/my_video.mp4 --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names
     ```
-2. To run with a webcam leave the argument blank.
+2. Webcam
 
     ```
-    ./yolo3_detector 
+    ./yolo3_detector --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names
     ```
 
 ## Class Structure
@@ -64,29 +64,30 @@ The input to this program can be either a mp4 video file or a webcam. Once run, 
 | Point                                                                                          | File       | Lines          |
 |------------------------------------------------------------------------------------------------|------------|----------------|
 | The project demonstrates an understanding of C++ functions and control structures.             | all        | -              |
-| The project reads data from a file and process the data, or the program writes data to a file. | [main.cpp] |                |
-| The project accepts user input and processes the input.                                        | [main.cpp] | 10, 21         |
+| The project reads data from a file and process the data, or the program writes data to a file. | [main.cpp] | 25 - 27        |
+| The project accepts user input and processes the input.                                        | [main.cpp] | 10, 24         |
 
 ### Object Oriented Programming
 
-| Point                                                                                          | File       | Lines          |
-|------------------------------------------------------------------------------------------------|------------|----------------|
-| The project uses Object Oriented Programming techniques.                                       | all        | -              |
-| Classes use appropriate access specifiers for class members.                                   | [main.cpp] |                |
-| Class constructors utilize member initialization lists.                                        | [main.cpp] | 10, 21         |
-| Classes encapsulate behavior.                                                                  |            |                |
+| Point                                                                                          | File        | Lines          |
+|------------------------------------------------------------------------------------------------|-------------|----------------|
+| The project uses Object Oriented Programming techniques.                                       | all         | -              |
+| Classes use appropriate access specifiers for class members.                                   | [yolo3.h]   |                |
+| Class constructors utilize member initialization lists.                                        | [yolo3.cpp] | 6              |
+| Classes encapsulate behavior.                                                                  | [yolo3.h]   | 41 - 44        |
 
 ### Memory Management
 
-| Point                                                                                          | File       | Lines          |
-|------------------------------------------------------------------------------------------------|------------|----------------|
-| The project makes use of references in function declarations.                                  | all        | -              |
-| The project uses destructors appropriately.                                                    | [main.cpp] |                |
-| The project follows the Rule of 5.                                                             | [main.cpp] | 10, 21         |
-| The project uses move semantics to move data, instead of copying it, where possible.           | [main.cpp] | 10             |                           
-| The project uses smart pointers instead of raw pointers.                                       |            |                |
+| Point                                                                                          | File        | Lines          |
+|------------------------------------------------------------------------------------------------|-------------|----------------|
+| The project makes use of references in function declarations.                                  | all         | -              |
+| The project uses destructors appropriately.                                                    | [model.cpp] | 16             |
+| The project follows the Rule of 5.                                                             | [model.cpp] | 6 - 42         |
+| The project uses move semantics to move data, instead of copying it, where possible.           | [main.cpp]  | 8, 25, 38      |                           
+| The project uses smart pointers instead of raw pointers.                                       | [yolo3.cpp] | 24             |
 
 [main.cpp]: src/main.cpp
 [yolo3.cpp]: src/yolo3.cpp
+[yolo3.h]: include/yolo3.h
 [model.cpp]: src/model.cpp
-
+[model.h]: include/model.h
