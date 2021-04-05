@@ -3,14 +3,17 @@
 
 #include <iostream>
 
-cv::String weights_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/yolov3.weights";
-cv::String config_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/yolov3.cfg";
-cv::String classNames_path = "/Users/justinbellucci/GitHub/yolo3-object-detection/coco.names";
-
 const char* keys =
-"{help h usage ? | | Usage examples: \n\t\t./yolo3_detector --video=my_video.mp4}"
-"{video v       |<none>| input video   }"
+"{help h usage ?    |      | Usage examples: \n\t\t./yolo3_detector --video=/my_video.mp4 --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names}"
+"{video v           |<none>| Input video   }"
+"{config c          |<none>| Path to yolov3.cfg file.   }"
+"{weights w         |<none>| Path to yolov3.weights file.   }"
+"{names n           |<none>| Path to coco.names file.   }"
 ;
+
+cv::String weights_path;
+cv::String config_path;
+cv::String classNames_path;
 
 std::string outputFile;
 cv::String mediaPath;
@@ -19,6 +22,10 @@ bool isVideo = false;
 int main(int argc, char** argv)
 {
     cv::CommandLineParser parser(argc, argv, keys);
+    config_path = parser.get<cv::String>("config");
+    weights_path = parser.get<cv::String>("weights");
+    classNames_path = parser.get<cv::String>("names");
+
     parser.about("Use this script to run object detection using YOLO3 in OpenCV.");
     if (parser.has("help"))
     {
