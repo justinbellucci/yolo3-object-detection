@@ -23,36 +23,41 @@ The following dependencies are required to run the program locally.
 ## Build Instructions
 
 1. Clone the repository and navigate to the downloaded folder.
-	
-	```	
-		git clone https://github.com/justinbellucci/yolo3-object-detection.git
-		cd yolo3-object-detection
-	```
-2. Download the models and note the path to each file.
-    ```	
-		sudo chmod a+x getModels.sh
-        ./getModels.sh
-	```
-3. Make a build directory in the top level directory:   
-    ```
-        mkdir build && cd build
-    ```
-3. Compile 
-    ```
-        cmake .. 
-        make
-    ```
+```
+git clone https://github.com/justinbellucci/yolo3-object-detection.git
+cd yolo3-object-detection
+```
+
+2. Download the models in the main project directory.
+```
+sudo chmod a+x getModels.sh
+./getModels.sh
+```
+
+3. Make a build directory in the top level directory:
+```
+mkdir build && cd build
+```
+4. Compile 
+  ```
+  cmake .. 
+  make
+  ```
 ## Running the Program
-The input to this program can be either a mp4 video file or a webcam. Once run, a window will open and the video will play automatically. Once finished, the program will terminate the window.
+The input to this program can be either a mp4 video file or a webcam. Both methods require the yolov3.weights, yolov3.cfg and coco.names files to be placed in the main project directory. Once run, a window will open and the video will play automatically. Once finished, the program will terminate the window.
+```
+// run from build directory
+cd build 
+```
 1. Video file:
 
     ```
-    ./yolo3_detector --video=/my_video.mp4 --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names
+    ./yolo3_detector --video=/my_video.mp4 
     ```
 2. Webcam
 
     ```
-    ./yolo3_detector --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names
+    ./yolo3_detector 
     ```
 
 ## Class Structure
