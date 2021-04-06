@@ -5,11 +5,8 @@
 #include <iostream>
 
 const char* keys =
-"{help h usage ?    |      | Usage examples: \n\t\t./yolo3_detector --video=/my_video.mp4 --config=/yolov3.cfg --weights=/yolov3.weights --names=/coco.names}"
+"{help h usage ?    |      | Usage examples: \n\t\t./yolo3_detector --video=/my_video.mp4 }"
 "{video v           |<none>| Input video   }"
-"{config c          |<none>| Path to yolov3.cfg file.   }"
-"{weights w         |<none>| Path to yolov3.weights file.   }"
-"{names n           |<none>| Path to coco.names file.   }"
 ;
 
 cv::String weights_path;
@@ -31,10 +28,6 @@ int main(int argc, char** argv)
     config_path = cwd + "/yolov3.cfg";
     weights_path = cwd + "/yolov3.weights";
     classNames_path = cwd + "/coco.names";
-
-    // config_path = parser.get<cv::String>("config");
-    // weights_path = parser.get<cv::String>("weights");
-    // classNames_path = parser.get<cv::String>("names");
 
     parser.about("Use this script to run object detection using YOLO3 in OpenCV.");
     if (parser.has("help"))
