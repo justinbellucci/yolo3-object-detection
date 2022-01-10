@@ -1,8 +1,6 @@
 # YOLOv3 Object Detection using OpenCV
 
-This project is the Capstone Project for the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). It detects up to 80 classes of objects from a sequence of frames using the You Only Look Once (YOLOv3) Deep Neural Network, originally authored by Joseph Redmon and Ali Farhadi. YOLOv3 forwards the the whole image, or frame, at once saving valuable inference time. It divides the image into a 13x13 grid of cells. Each cell is responsible for predicting a number of bounding boxes in the image. For each bounding box, the network predicts the confidence that the bounding box encloses an object, and outputs the probability that the object represents a particular class. Using non-maximum suppression the bounding boxes with low confidence scores (0.5) are eliminated. This technique yields surprisingly fast results.
-
-This project also aims to demonstrate the use of modern Object Oriented Programming in C++ with the features such as smart pointers, and the rule-of-five. 
+This is the Capstone Project for the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). This program can detect up to 80 classes of objects from a sequence of video frames using the You Only Look Once (YOLOv3) Deep Neural Network, originally authored by Joseph Redmon and Ali Farhadi. YOLOv3 forwards the the whole image, or frame, at once saving valuable inference time. It divides the image into a 13x13 grid of cells. Each cell is responsible for predicting a number of bounding boxes in the image. For each bounding box, the network predicts the confidence that the bounding box encloses an object and outputs the probability that the object represents a particular class. Using non-maximum suppression the bounding boxes with low confidence scores (0.5) are eliminated. This technique yields surprisingly fast results.
 
 <img src="data/yoloDriving.gif"/>
 
